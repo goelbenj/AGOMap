@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 80%;
+        width: 60%;
+        margin: auto;
+        border: 0px solid #ED1B24;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Example single danger button -->
+    <div class="d-flex justify-content-center">
+      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #ED1B24">
+        <a class="navbar-brand" href="">Floor:</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="https://navyseal334.wixsite.com/agomap">First</a>
+            <a class="nav-item nav-link active" href="https://navyseal334.wixsite.com/agomap2">Second</a>
+            <a class="nav-item nav-link disabled" href="#">Third</a>
+            <a class="nav-item nav-link disabled" href="#">Fourth</a>
+            <a class="nav-item nav-link disabled" href="#">Fifth</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <!-- <div id="map"></div> -->
+    <div class="container-fluid">
+      <div class="d-flex justify-content-center">
+        <!-- <ul class="list-group">
+  <li class="list-group-item bg-white">
+    <p class="text-left">
+      <h5>
+        <img src="data:image/png;base64,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" class="rounded float-left" alt="Responsive image" style="height: 30px">
+        - Elevator
+      </h5>
+    </p>
+  </li>
+  <li class="list-group-item">
+    <p class="text-left">
+      <h5>
+        <img src="https://cdn.onlinewebfonts.com/svg/img_377905.png" class="rounded float-left" alt="Responsive image" style="height: 30px">
+        - Restroom
+      </h5>
+    </p>
+  </li>
+
+<!-- </ul> -->
+
+          <!-- <div class="p-2">
+            <p class="text-left">
+              uppercased text
+            </p>
+          </div>
+          <div class="p-2">
+            <p class="text-left">
+              uppercased text
+            </p>
+          </div> -->
+        <!-- </div> -->
+      <!-- </ul>  -->
+        <div class="d-flex justify-content-center">
+          <iframe src="https://www.google.com/maps/d/embed?mid=1Unqt6WuUcsl9AjiW1Y4ECgrPB2e0g3M2" width=100% height=400px">
+          </iframe>
+        </div>
+      </div>
+    </div>
+    <script>
+      function initMap() {
+        //Map options
+        var options = {
+          zoom:19,
+          center:{lat: 43.653600, lng:  -79.392500}
+        }
+
+        var map = new google.maps.Map(document.getElementById('map'), options);
+        // var src = "http://drive.google.com/uc?id=10nqiymddgrM-3jRMQ06R0eHhpyzpcSEv";
+        // var kmlLayer = new google.maps.KmlLayer(src, {
+        //           suppressInfoWindows: true,
+        //           preserveViewport: false,
+        //           map: map
+        //         });
+        //Array of markers
+        var markers = [
+          {
+            coords:{lat: 43.653528, lng:  -79.392750},
+            iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+            content:'<h>AGO Main Entrance</h>'
+          },
+          {
+            coords:{lat: 43.653600, lng:  -79.392750},
+            iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+            content:'<h>AGO Front Desk</h>'
+          },
+          {
+            coords:{lat: 43.653700, lng:  -79.392750},
+            iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+            content:'<h>AGO Security Desk</h>'
+          }
+
+        ];
+
+        //Loop through and add marker each iteration
+        // for(var i = 0; i < markers.length; i++) {
+        //   addMarker(markers[i]);
+        // }
+
+
+        //Add Marker function
+        function addMarker(props){
+          var marker = new google.maps.Marker({
+            position:props.coords,
+            map:map,
+            //icon:props.iconImage
+          });
+
+          //Check for custom icon
+          if(props.iconImage){
+            //Set icon image
+            marker.setIcon(props.iconImage);
+          }
+
+          //Check for content windows
+          if(props.content){
+            var infoWindow = new google.maps.InfoWindow({
+              content:props.content
+            });
+
+            marker.addListener('click', function(){
+              infoWindow.open(map, marker);
+            });
+          }
+        }
+
+        //Creating rooms
+        // var triangleCoords = [
+        //   {lat: 43.653900, lng: -79.392750},
+        //   {lat: 43.653550, lng: -79.392700},
+        //   {lat: 43.653590, lng: -79.392380},
+        //   {lat: 43.653950, lng: -79.392500}
+        // ];
+        // var bermudaTriangle = new google.maps.Polygon({
+        //     paths: triangleCoords,
+        //     strokeColor: '#FF0000',
+        //     strokeOpacity: 1,
+        //     strokeWeight: 2,
+        //     fillColor: '#FF0000',
+        //     fillOpacity: 0.35,
+        //     // editable: true,
+        //     // draggable: true,
+        //     // geodesic: true
+        //   });
+        //   bermudaTriangle.setMap(map);
+      }
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoN5MZuCQwGrxIy_87n8jxdLzRNL048xs&callback=initMap"
+    async defer></script>
+    <!-- <div id="like_button_container"></div> -->
+
+
+
+    <!-- Loading Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <!-- Load our React component. -->
+    <script src="like_button.js"></script>
+    <!-- <script src="todo.js"></script> -->
+    <!-- Adding JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </body>
+</html>
